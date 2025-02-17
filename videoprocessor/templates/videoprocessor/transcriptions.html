@@ -1,0 +1,46 @@
+{% extends "videoprocessor/base.html" %}
+
+{% block title %}Transcription{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-center text-primary mb-4">Transcription Details</h2>
+        
+        <div class="mb-3">
+            <p><strong>🎥 Video Name:</strong> <span class="text-secondary">{{ video_name }}</span></p>
+        </div>
+
+        <div class="mb-3 p-3 bg-light rounded">
+            <p><strong>📝 Transcription:</strong></p>
+            <p class="text-dark border-left pl-3">{{ transcription }}</p>
+        </div>
+
+        <div class="alert alert-info">
+            <p><strong>📊 Overall Sentiment:</strong> <span class="font-weight-bold">{{ overall_sentiment }}</span></p>
+            <p><strong>🔢 Sentiment Score:</strong> <span class="badge badge-primary">{{ sentiment_score }}</span></p>
+        </div>
+
+        {% if abusive_words %}
+            <div class="alert alert-danger">
+                <p><strong>🚨 Abusive Words Detected:</strong></p>
+                <p class="text-danger">{{ abusive_words|join:", " }}</p>
+            </div>
+        {% else %}
+            <div class="alert alert-success">
+                <p>No abusive words detected. ✅</p>
+            </div>
+        {% endif %}
+
+        {% if bad_words %}
+            <div class="alert alert-warning">
+                <p><strong>⚠️ Bad Words:</strong> <span class="text-warning">{{ bad_words|join:", " }}</span></p>
+            </div>
+        {% else %}
+            <div class="alert alert-success">
+                <p>No bad words detected. ✅</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

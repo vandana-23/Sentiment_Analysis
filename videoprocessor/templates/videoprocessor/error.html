@@ -1,0 +1,11 @@
+{% extends "videoprocessor/base.html" %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-danger">Oops! Something went wrong.</h2>
+    <p><strong>Error:</strong> {{ error }}</p>  
+    <a href="{% url 'upload_video' %}" class="btn btn-primary">Try Again</a>
+</div>
+{% endblock %}

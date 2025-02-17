@@ -1,0 +1,29 @@
+{% extends 'videoprocessor/base.html' %}
+
+{% block title %}Real-Time Recording{% endblock %}
+
+{% block content %}
+<div class="container text-center mt-5">
+    <h2 class="mb-4">Choose an Option</h2>
+    
+    <div class="row">
+        <!-- Video Recording Option -->
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h4>Record a Video</h4>
+                <p>Capture a video and process it with sentiment analysis.</p>
+                <a href="{% url 'record_video' %}" class="btn btn-primary">Start Video Recording</a>
+            </div>
+        </div>
+
+        <!-- Audio Recording Option -->
+        <div class="col-md-6">
+            <div class="card p-4">
+                <h4>Record an Audio</h4>
+                <p>Record your voice and analyze it for sentiment.</p>
+                <a href="{% url 'record_audio' %}" class="btn btn-success">Start Audio Recording</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

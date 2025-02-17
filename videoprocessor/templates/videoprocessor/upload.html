@@ -1,0 +1,26 @@
+{% extends 'videoprocessor/base.html' %}
+
+{% block title %}Upload Video{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card p-4">
+        <h2 class="mb-3">Upload a Video for Analysis</h2>
+        
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <label for="id_video">Select a Video File:</label>
+            <input type="file" name="video" id="id_video" class="form-control mb-3" accept="video/*" required>
+
+            <button type="submit" class="btn btn-primary">Upload & Process</button>
+        </form>
+
+        {% if error %}
+            <div class="alert alert-danger mt-3">
+                ⚠️ {{ error }}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

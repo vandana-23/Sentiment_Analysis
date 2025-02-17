@@ -1,0 +1,25 @@
+{% extends "videoprocessor/base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uploaded Videos</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}"> 
+</head>
+<body>
+    <div class="container">
+        <h1>Uploaded Videos</h1>
+        <ul>
+            {% for video in videos %}
+                <li>
+                    <a href="{% url 'transcription_detail' video.id %}">{{ video.name }}</a>
+                </li>
+            {% empty %}
+                <li>No videos uploaded yet.</li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'upload_video' %}" class="btn">Upload a New Video</a>
+    </div>
+</body>
+</html>

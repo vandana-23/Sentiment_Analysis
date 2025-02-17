@@ -1,0 +1,52 @@
+{% extends 'videoprocessor/base.html' %}
+
+{% block title %}Record Video{% endblock %}
+
+{% block content %}
+<div class="card p-4">
+    <h2>Record Video</h2>
+    
+    <video id="videoPreview" autoplay muted></video>
+    <button id="startRecording" class="btn btn-success">Start Recording</button>
+    <button id="stopRecording" class="btn btn-danger" disabled>Stop Recording</button>
+
+    <form id="uploadForm" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="video" id="videoFile" style="display: none;">
+        <button type="submit" class="btn btn-primary mt-3">Upload & Process</button>
+    </form>
+</div>
+
+<script>
+    let mediaRecorder;
+    let recordedChunks = [];
+
+    document.getElementById('startRecording').addEventListener('click', async () => {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        document.getElementById('videoPreview').srcObject = stream;
+
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.start();
+
+        mediaRecorder.ondataavailable = (event) => recordedChunks.push(event.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(recordedChunks, { type: 'video/mp4' });
+            const file = new File([blob], "recorded_video.mp4", { type: "video/mp4" });
+
+            const fileInput = document.getElementById('videoFile');
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(file);
+            fileInput.files = dataTransfer.files;
+        };
+
+        document.getElementById('startRecording').disabled = true;
+        document.getElementById('stopRecording').disabled = false;
+    });
+
+    document.getElementById('stopRecording').addEventListener('click', () => {
+        mediaRecorder.stop();
+        document.getElementById('startRecording').disabled = false;
+        document.getElementById('stopRecording').disabled = true;
+    });
+</script>
+{% endblock %}
